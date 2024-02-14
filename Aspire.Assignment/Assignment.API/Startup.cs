@@ -9,6 +9,8 @@ using Assignment.Infrastructure;
 using Assignment.Core;
 using Microsoft.AspNetCore.Mvc;
 using Assignment.Core.Security;
+using Assignment.Migrations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment
 {
@@ -31,6 +33,18 @@ namespace Assignment
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            services.AddDbContext<DatabaseContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly("Assignment.Migrations");
+                }));
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+            
 
             services.AddControllers();
 

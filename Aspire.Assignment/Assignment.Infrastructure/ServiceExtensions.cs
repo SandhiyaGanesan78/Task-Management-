@@ -18,7 +18,7 @@ namespace Assignment.Infrastructure
 
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddSqlite<DatabaseContext>(configuration.GetConnectionString("DefaultConnection"), (options) =>
+            return services.AddSqlServer<DatabaseContext>(configuration.GetConnectionString("DefaultConnection"), (options) =>
             {
                 options.MigrationsAssembly("Assignment.Migrations");
             });
