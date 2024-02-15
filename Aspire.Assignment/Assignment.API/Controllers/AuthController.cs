@@ -45,6 +45,29 @@ namespace Assignment.Controllers
             var response = await _mediator.Send(query);
             return Ok(response);
         }
+        [HttpPost("register")]
+        [ProducesResponseType(typeof(int), (int)HttpStatusCode.Created)]
+        [ProducesErrorResponseType(typeof(BaseResponseDTO))]
+        public async Task<IActionResult> Register([FromBody] CreateUserDTO model)
+        {
+            try
+            {
+                var command = new CreateUserCommand(model);
+                var response = await _mediator.Send(command);
+                
+                // Return the user and token in the response
+                return Ok(response);
+                
+            }
+            catch (InvalidRequestBodyException ex)
+            {
+                return BadRequest(new BaseResponseDTO
+                {
+                    IsSuccess = false,
+                    Errors = ex.Errors
+                });
+            }
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.Created)]

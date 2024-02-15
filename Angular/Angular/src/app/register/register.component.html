@@ -14,37 +14,56 @@
                         <div class="text-center">
                             <h3 class="text-primary">Sign Up</h3>
                         </div>
-                        <form action="" style="background-color: transparent;">
+                        <form [formGroup]="signupForm">
                             <div class="p-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-primary"><i
                                             class="bi bi-person-plus-fill text-white"></i></span>
-                                    <input type="text" class="form-control" placeholder="Username">
+                                    <input type="text" formControlName="username" class="form-control" placeholder="Username">
+                                    <div class="invalid-feedback" style="display: block;">
+                                      <small *ngIf="signupForm.controls['username'].errors?.['pattern']" class="text-danger">Only characters are allowed</small>
+                                      <small  *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')" class="text-danger" >Username is required</small>
+                                    </div>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-primary"><i
                                             class="bi bi-key-fill text-white"></i></span>
-                                    <input type="password" class="form-control" placeholder="password">
+                                    <input type="password" formControlName="password" class="form-control" placeholder="password">
+                                    <div class="invalid-feedback" style="display: block;">
+                                      <small *ngIf="signupForm.controls['password'].errors?.['pattern']" class="text-danger">  Password must contain: Minimum 8 characters atleast 1 UpperCase Alphabet, 1 LowerCase Alphabet, 1 Number and 1 Special Character</small>
+                                      <small  *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required','password')" class="text-danger" >Password is required</small>
+                                    </div>
                                 </div>
                                 <div class="input-group mb-3">
                                   <span class="input-group-text bg-primary"><i
                                           class="bi bi-key-fill text-white"></i></span>
-                                  <input type="confirmpassword" class="form-control" placeholder="confirmpassword">
+                                  <input type="confirmpassword" formControlName="confirmpassword" class="form-control" placeholder="confirmpassword">
+                                  <div class="invalid-feedback" style="display: block;">
+                                    <small  *ngIf="signupForm.controls['confirmpassword'].dirty && signupForm.hasError('required','confirmpassword')" class="text-danger" >confirmpassword is required</small>
+                                  </div>
                               </div>
                               <div class="input-group mb-3">
                                 <span class="input-group-text bg-primary"><i
                                         class="bi bi-envelope-fill text-white"></i></span>
-                                <input type="email" class="form-control" placeholder="email">
+                                <input type="email" formControlName="email" class="form-control" placeholder="email">
+                                <div class="invalid-feedback" style="display: block;">
+                                  <small *ngIf="signupForm.controls['email'].errors?.['pattern']" class="text-danger">Invalid email</small>
+                                  <small  *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')" class="text-danger" >email is required</small>
+                                </div>
                             </div>
                               <div class="input-group mb-3">
                                 <span class="input-group-text bg-primary"><i
                                         class="bi bi-phone-fill text-white"></i></span>
-                                <input type="phone" class="form-control" placeholder="mobilenumber">
+                                <input type="phone" formControlName="mobileNumber" class="form-control" placeholder="mobilenumber">
+                                <div class="invalid-feedback" style="display: block;">
+                                  <small *ngIf="signupForm.controls['mobileNumber'].errors?.['pattern']" class="text-danger"> Invalid Mobileno</small>
+                                  <small *ngIf="signupForm.controls['mobileNumber'].dirty && signupForm.hasError('required','mobileNumber')" class="text-danger" >mobileno is required</small>
+                                </div>
                             </div>
-                                <button class="btn btn-primary text-center mt-2" type="submit">
+                                <button class="btn btn-primary text-center mt-2" [disabled]="signupForm.invalid" type="submit">
                                     SignUp
                                 </button>
-                                <p class="text-center mt-5">Already have an account?
+                                <p class="text-center mt-4">Already have an account?
                                     <a class="text-primary" routerLink="/login">Login</a>
                                 </p>
                             </div>
